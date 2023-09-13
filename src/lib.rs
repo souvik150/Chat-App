@@ -1,14 +1,20 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+use serde::{Deserialize, Serialize};
+use std::sync::Arc;
+
+#[derivce(Debug, Deserialize, Serialize, PartialEq, Eq)]
+pub enum Client{
+    Join { name: Arc<String> },
+    Post {
+        name: Arc<String>,
+        message: Arc<String>,
+    },
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+#[derivce(Debug, Deserialize, Serialize, PartialEq)]
+pub enum Server {
+    Message {
+        name: Arc<String>,
+        message: Arc<String>,
+    },
+    Error(String)
 }
